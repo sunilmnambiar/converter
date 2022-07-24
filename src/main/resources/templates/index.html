@@ -77,6 +77,28 @@
 		</form>
         
       </div>
+      
+      <div th:if="${not#lists.isEmpty(conversionHistory)}">
+      		<h3 th:text="'Conversion History for ' + ${#authentication.getPrincipal().getUsername()}"></h3>
+			<table id="history" class="table table-bordered" style="width: 100%">
+	             <thead>
+	             <tr>
+	                 <th>Date</th>
+	                 <th>From</th>
+	                 <th>To</th>
+	                 <th>Rate</th>
+	             </tr>
+	             </thead>
+	             <tbody>
+	             <tr th:each="history : ${conversionHistory}">
+	             	 <td th:text="${history.date}">Date</td>
+	                 <td th:text="${history.sourceCurrency}">From</td>
+	                 <td th:text="${history.targetCurrency}">To</td>
+	                 <td th:text="${history.targetValueLocalized}">Rate</td>
+	             </tr>
+	             </tbody>
+	         </table>
+	    </div>
 
     </div> <!-- /container -->
     
