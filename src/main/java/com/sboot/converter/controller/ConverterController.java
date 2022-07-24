@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,15 +35,20 @@ public class ConverterController {
 	@PostMapping("/")
 	public String convert(@ModelAttribute Currency currency, Model model,
 			HttpServletRequest request) throws Exception {
-		logger.info("Request to convert currency: {}", currency);
+		logger.info("Request to convert currency: from={}, ip={}", 
+				currency.getSourceCurrency(), currency.getIpAddress());
 		
-	    if(!InetAddresses.isInetAddress(currency.getIpAddress())) {
-	    	currency.setIpAddress(request.getRemoteAddr());
-	    }
-	    
-	    logger.debug("IP Address is: {}", currency.getIpAddress());
-	    
-	    converterService.convertCurrency(currency);
+		if(StringUtils.hasText(currency.getSourceCurrency())) {
+			if(!InetAddresses.isInetAddress(currency.getIpAddress())) {
+		    	currency.setIpAddress(request.getRemoteAddr());
+		    }
+		    
+		    logger.debug("IP Address is: {}", currency.getIpAddress());
+		    
+		    converterService.convertCurrency(currency);
+		} else {
+			model.addAttribute("error", "Please select at least one currency...");
+		}
 	    
 	    model.addAttribute("currency", currency);
 	    model.addAttribute("currencies", CurrencyUtil.CG_CODE_MAP.keySet());
