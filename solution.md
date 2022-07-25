@@ -1,5 +1,4 @@
-# converter
-Currency Converter
+# Currency Converter
 
 This is a Spring boot application that listens on port 8080, with the functionalities detailed below. It uses openjdk:11-jdk-slim as base docker image.
 
@@ -58,37 +57,41 @@ docker run --name jenkins -p 8080:8080 -p 50000:50000 --privileged=true -v jenki
 
 ##### Setting up Jenkins
 
-- Access Jenkins insance via http://localhost:8080/
+- Access Jenkins insance via `http://localhost:8080/`
 - Enter the Administrator user password (get it from the container log)
-- Click on 'Install Suggested Plugins' (Grab a cup of coffee as this step takes some time to complete!)
-- Create the admin user admin/password
+- Click on `Install Suggested Plugins` (Grab a cup of coffee as this step takes some time to complete!)
+- Create the admin user `admin`/`password`
 - Click on Create a Job
-- Give name as 'converter-pipeline' and type 'Pipeline'
-- Project url: https://github.com/sunilmnambiar/converter
-- Pipeline script from SCM, Repository url: https://github.com/sunilmnambiar/converter, branch main
-- Script path: Jenkinsfile
+- Give name as `converter-pipeline` and type `Pipeline`
+- Project url: `https://github.com/sunilmnambiar/converter`
+- Poll interval `H/5 * * * *`
+- Pipeline script from SCM, Repository url: `https://github.com/sunilmnambiar/converter`, branch `main`
+- Script path: `Jenkinsfile`
 - Build the pipeline
 
-Application will be accessible at http://localhost:80/
+Application will be accessible at `http://localhost:80/`
 
-Login with credential admin/password
+Login with credential `admin`/`password`
 
 ### Architecture
 
- Assertions:
+##### Assertions:
 - Only top 10 Crypto currencies supported (can be added from backend)
 - IP to location uses GeoPlugin service (caching for 12 hours)
 - Live currency rates retrieved from CoinGecko (caching for 5 minutes)
 
-MVP
+##### MVP
 ![Basic Features](docs/converter_mvp.png)
 
-Target Architecture
+##### Target Architecture
 ![Target Architecture](docs/converter_target.png)
 
-Scheenshots
+### Scheenshots
+##### Login Screen
 ![Login Screen](docs/converter_login.png)
+##### Converter home and conversion history
 ![Converter home and history](docs/converter_home.png)
+##### Jenkins Pipeline
 ![Jenkins Pipeline](docs/converter_jenkins_pipeline.png)
 
 
