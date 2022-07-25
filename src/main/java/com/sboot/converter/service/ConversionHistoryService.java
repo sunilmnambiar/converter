@@ -20,7 +20,7 @@ public class ConversionHistoryService {
 	public List<ConversionHistory> getAllConversions(String userName) {
 		List<ConversionHistory> conversions = new ArrayList<>();
 		//TODO: find all by user
-		conversionRepository.findAll().forEach(conversion -> conversions.add(buildConversionHistory(conversion)));
+		conversionRepository.findRecent().forEach(conversion -> conversions.add(buildConversionHistory(conversion)));
 		return conversions;
 	}
 	

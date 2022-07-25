@@ -27,8 +27,8 @@ public class GeoPluginConnector implements GeoConnector {
 	 */
 	@Override
 	public GeoCode getGeoCode(String ipAddress) {
-		ResponseEntity<String> response = restTemplate.getForEntity("http://www.geoplugin.net/json.gp?ip=" + ipAddress,
-				String.class);
+		ResponseEntity<String> response = restTemplate.getForEntity("http://www.geoplugin.net/json.gp?ip={ip}",
+				String.class, ipAddress);
 		if (response.getStatusCode() == HttpStatus.OK) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
@@ -36,7 +36,7 @@ public class GeoPluginConnector implements GeoConnector {
 				String countryCode = responseMap.findValue("geoplugin_countryCode").textValue();
 				String currencyCode = responseMap.findValue("geoplugin_currencyCode").textValue();
 				String currencySymbol = responseMap.findValue("geoplugin_currencySymbol_UTF8").textValue();
-				logger.info("{}, {}, {}", countryCode, currencyCode, currencySymbol);
+				logger.info("Response: {}, {}, {}", countryCode, currencyCode, currencySymbol);
 
 				GeoCode geoCode = new GeoCode();
 				geoCode.setCountryCode(countryCode);

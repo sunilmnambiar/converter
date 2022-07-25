@@ -34,8 +34,8 @@ public class CoinGeckoConnector implements CryptoConnector {
 		String toCurrency = currency.getTargetCurrency();
 		String fromCurrencyCode = CurrencyUtil.CG_CODE_MAP.get(fromCurrency.toLowerCase());
 
-		ResponseEntity<String> response = restTemplate.getForEntity("https://api.coingecko.com/api/v3/simple/price?ids="
-				+ fromCurrencyCode + "&vs_currencies=" + toCurrency, String.class);
+		ResponseEntity<String> response = restTemplate.getForEntity("https://api.coingecko.com/api/v3/simple/price?ids={from}&vs_currencies={to}", 
+				String.class, fromCurrencyCode, toCurrency);
 		if (response.getStatusCode() == HttpStatus.OK) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
