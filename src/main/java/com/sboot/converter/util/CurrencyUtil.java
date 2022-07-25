@@ -3,13 +3,18 @@ package com.sboot.converter.util;
 import java.util.Locale;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import com.sboot.converter.dto.GeoCode;
 
 public class CurrencyUtil {
+	
+	private static Logger logger = LoggerFactory.getLogger(CurrencyUtil.class);
 
-	// TODO: Retrieve from a database table
+	// TODO: Retrieve from https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0 
+	// and put it in a database table
 	/**
 	 * Get top 10 currency code mapping for CoinGecko
 	 */
@@ -35,6 +40,7 @@ public class CurrencyUtil {
 	public static GeoCode getDefaultGeoCode() {
 		GeoCode geoCode;
 		Locale defaultLocale = Locale.getDefault();
+		logger.debug("{}, {}, {}", defaultLocale, defaultLocale.getCountry(), new Locale("", defaultLocale.getCountry()));
 		geoCode = new GeoCode();
 		geoCode.setCountryCode(defaultLocale.getCountry());
 		geoCode.setCurrencyCode(

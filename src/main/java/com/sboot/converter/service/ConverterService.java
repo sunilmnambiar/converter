@@ -39,6 +39,10 @@ public class ConverterService {
 			geoCode.setIpAddress(currency.getIpAddress());
 		} else {
 			geoCode = geoCache.get(currency.getIpAddress());
+			// sometimes service returns null currency
+			if(geoCode.getCurrencyCode()==null) {
+				geoCode = CurrencyUtil.getDefaultGeoCode();
+			}
 		}
 
 		currency.setTargetCurrency(geoCode.getCurrencyCode());
