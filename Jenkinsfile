@@ -1,7 +1,7 @@
 node {
 	stage('Build Docker Image') {
 	
-		echo "Building docker image"
+		echo "Building docker image..."
 		git branch: 'main', url: 'https://github.com/sunilmnambiar/converter'
       	sh "docker build -t sunilmnambiar/converter ."
       	
@@ -9,7 +9,7 @@ node {
    
     stage('Deploy Docker Image'){
     
-      echo "Deploying docker image"
+      echo "Deploying docker image..."
 	  
 	  sh "docker stop converter || true"
 	  
