@@ -6,6 +6,14 @@ node {
       	sh "docker build -t sunilmnambiar/converter ."
       	
     }
+    
+    stage('Unit Tests') {
+	
+		echo "Running unit tests..."
+		git branch: 'main', url: 'https://github.com/sunilmnambiar/converter'
+		sh "mvn test"
+      	
+    }
    
     stage('Deploy Docker Image'){
     
