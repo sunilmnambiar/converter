@@ -40,7 +40,7 @@ class ConverterControllerTest {
 		// arrange
 		Currency currency = new Currency();
 		currency.setSourceCurrency("eth");
-		currency.setIpAddress("");
+		currency.setIpAddress("85.214.132.117");
 
 		doAnswer(invocation -> {
 			Currency tempCurrency = (Currency) invocation.getArgument(0);
@@ -64,7 +64,7 @@ class ConverterControllerTest {
 		// arrange
 		Currency currency = new Currency();
 		currency.setSourceCurrency("eth");
-		currency.setIpAddress("");
+		currency.setIpAddress("85.214.132.117");
 
 		doAnswer(invocation -> {
 			throw new ApplicationException("Conversion failed");

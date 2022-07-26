@@ -37,8 +37,9 @@ class ConverterServiceTest {
 		//prepare
 		Currency currency = new Currency();
 		currency.setSourceCurrency("eth");
-		currency.setIpAddress("");
+		currency.setIpAddress("85.214.132.117");
 
+		when(geoCache.get(any(String.class))).thenReturn(mock(GeoCode.class));
 		when(currencyCache.get(any(Currency.class))).thenReturn(BigDecimal.TEN);
 
 		//act
@@ -54,7 +55,11 @@ class ConverterServiceTest {
 		//prepare
 		Currency currency = new Currency();
 		currency.setSourceCurrency("eth");
+		currency.setIpAddress("85.214.132.117");
 
+		GeoCode geoCode=  new GeoCode();
+		geoCode.setCountryCode("EUR");
+		when(geoCache.get(any(String.class))).thenReturn(geoCode);
 		when(currencyCache.get(any(Currency.class))).thenThrow(ApplicationException.class);
 
 		//act and assert
