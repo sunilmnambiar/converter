@@ -37,6 +37,7 @@ class ConverterServiceTest {
 		//prepare
 		Currency currency = new Currency();
 		currency.setSourceCurrency("eth");
+		currency.setIpAddress("");
 
 		when(currencyCache.get(any(Currency.class))).thenReturn(BigDecimal.TEN);
 
