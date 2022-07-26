@@ -11,7 +11,7 @@ node {
 	
 		echo "Running unit tests..."
 		git branch: 'main', url: 'https://github.com/sunilmnambiar/converter'
-		sh "mvn test"
+		sh "docker build -f Dockerfile_UT -t sunilmnambiar/ut ."
       	
     }
    
