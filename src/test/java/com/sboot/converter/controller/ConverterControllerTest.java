@@ -31,6 +31,7 @@ class ConverterControllerTest {
 	@BeforeEach
 	void setup() {
 		converterService = mock(ConverterService.class);
+		conversionHistoryService = mock(ConversionHistoryService.class);
 		converterController = new ConverterController(converterService, conversionHistoryService);
 	}
 
