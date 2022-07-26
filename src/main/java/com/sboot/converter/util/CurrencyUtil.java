@@ -38,13 +38,18 @@ public class CurrencyUtil {
 	 * @return GeoCode
 	 */
 	public static GeoCode getDefaultGeoCode() {
-		GeoCode geoCode;
+		GeoCode geoCode = new GeoCode();
 		Locale defaultLocale = Locale.getDefault();
-		logger.debug("{}, {}, {}", defaultLocale, defaultLocale.getCountry(), new Locale("", defaultLocale.getCountry()));
-		geoCode = new GeoCode();
-		geoCode.setCountryCode(defaultLocale.getCountry());
-		geoCode.setCurrencyCode(
-				java.util.Currency.getInstance(new Locale("", defaultLocale.getCountry())).getCurrencyCode());
+		if(StringUtils.hasText(defaultLocale.getCountry())) {
+			logger.debug("{}, {}, {}", defaultLocale, defaultLocale.getCountry(), new Locale("", defaultLocale.getCountry()));
+			geoCode.setCountryCode(defaultLocale.getCountry());
+			geoCode.setCurrencyCode(
+					java.util.Currency.getInstance(new Locale("", defaultLocale.getCountry())).getCurrencyCode());
+		}else {
+			// if locale not set in the docker image
+			geoCode.setCountryCode("DE");
+			geoCode.setCurrencyCode("EUR");
+		}
 		return geoCode;
 	}
 

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ public class CoinGeckoConnector implements CryptoConnector {
 	private Logger logger = LoggerFactory.getLogger(CoinGeckoConnector.class);
 
 	private RestTemplate restTemplate;
+	private String cgUrl;
 
 	/**
 	 * Get conversion rate from CoinGecko
@@ -34,8 +36,7 @@ public class CoinGeckoConnector implements CryptoConnector {
 		String toCurrency = currency.getTargetCurrency();
 		String fromCurrencyCode = CurrencyUtil.CG_CODE_MAP.get(fromCurrency.toLowerCase());
 
-		ResponseEntity<String> response = restTemplate.getForEntity("https://api.coingecko.com/api/v3/simple/price?ids={from}&vs_currencies={to}", 
-				String.class, fromCurrencyCode, toCurrency);
+		ResponseEntity<String> response = restTemplate.getForEntity(cgUrl, String.class, fromCurrencyCode, toCurrency);
 		if (response.getStatusCode() == HttpStatus.OK) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
@@ -57,8 +58,9 @@ public class CoinGeckoConnector implements CryptoConnector {
 	}
 
 	@Autowired
-	public CoinGeckoConnector(RestTemplate restTemplate) {
+	public CoinGeckoConnector(RestTemplate restTemplate, @Value("${com.sboot.converter.connector.cg.url}") String cgUrl) {
 		this.restTemplate = restTemplate;
+		this.cgUrl = cgUrl;
 	}
 	
 }

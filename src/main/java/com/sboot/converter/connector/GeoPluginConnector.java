@@ -3,6 +3,7 @@ package com.sboot.converter.connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -21,14 +22,14 @@ public class GeoPluginConnector implements GeoConnector {
 	private Logger logger = LoggerFactory.getLogger(GeoPluginConnector.class);
 
 	private RestTemplate restTemplate;
+	private String gpUrl;
 
 	/**
 	 * Get geocode from GeoPlugin
 	 */
 	@Override
 	public GeoCode getGeoCode(String ipAddress) {
-		ResponseEntity<String> response = restTemplate.getForEntity("http://www.geoplugin.net/json.gp?ip={ip}",
-				String.class, ipAddress);
+		ResponseEntity<String> response = restTemplate.getForEntity(gpUrl, String.class, ipAddress);
 		if (response.getStatusCode() == HttpStatus.OK) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
@@ -56,8 +57,9 @@ public class GeoPluginConnector implements GeoConnector {
 	}
 
 	@Autowired
-	public GeoPluginConnector(RestTemplate restTemplate) {
+	public GeoPluginConnector(RestTemplate restTemplate, @Value("${com.sboot.converter.connector.gp.url}") String gpUrl) {
 		this.restTemplate = restTemplate;
+		this.gpUrl = gpUrl;
 	}
 
 }
